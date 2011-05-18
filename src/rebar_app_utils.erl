@@ -31,7 +31,7 @@
          app_src_to_app/1,
          app_name/1,
          app_applications/1,
-         app_vsn/1]).
+         app_vsn/1, app_vsn/2]).
 
 -export([load_app_file/1]). % TEMPORARY
 
@@ -89,12 +89,15 @@ app_applications(AppFile) ->
 app_vsn(AppFile) ->
     case load_app_file(AppFile) of
         {ok, _, AppInfo} ->
-            AppDir = filename:dirname(filename:dirname(AppFile)),
-            vcs_vsn(get_value(vsn, AppInfo, AppFile), AppDir);
+            app_vsn(AppFile, AppInfo);
         {error, Reason} ->
             ?ABORT("Failed to extract vsn from ~s: ~p\n",
                    [AppFile, Reason])
     end.
+
+app_vsn(AppFile, AppInfo) ->
+    AppDir = filename:dirname(filename:dirname(AppFile)),
+    vcs_vsn(get_value(vsn, AppInfo, AppFile), AppDir).
 
 
 %% ===================================================================

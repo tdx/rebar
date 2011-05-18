@@ -98,7 +98,7 @@ preprocess(Config, AppSrcFile) ->
 
 
             %% AppSrcFile may contain instructions for generating a vsn number
-            Vsn = rebar_app_utils:app_vsn(AppSrcFile),
+            Vsn = rebar_app_utils:app_vsn(AppSrcFile, A1),
             A2 = lists:keystore(vsn, 1, A1, {vsn, Vsn}),
 
             %% Build the final spec as a string
